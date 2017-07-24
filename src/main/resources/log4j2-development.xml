@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Properties>
+		<Property name="PID">????</Property>
+		<Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
+		<Property name="LOG_LEVEL_PATTERN">%5p</Property>
+		<Property name="LOG_PATTERN">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{${LOG_LEVEL_PATTERN}} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+		<RollingFile name="DebugRollingFile" fileName="urlshortener_base/logs/urlshortener.log"
+			filePattern="urlshortener_base/logs/urlshortener.log.%d{yyyy-MM-dd-HH}.gz">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+			<Filters>
+				<ThresholdFilter levelMin="TRACE" levelMax="FATAL" onMatch="ACCEPT" onMismatch="NEUTRAL" />
+			</Filters>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<AsyncLogger name="org.apache.catalina.startup.DigesterFactory" level="error" />
+		<AsyncLogger name="org.apache.catalina.util.LifecycleBase" level="error" />
+		<AsyncLogger name="org.apache.coyote.http11.Http11NioProtocol" level="warn" />
+		<AsyncLogger name="org.apache.sshd.common.util.SecurityUtils" level="warn"/>
+		<AsyncLogger name="org.apache.tomcat.util.net.NioSelectorPool" level="warn" />
+		<AsyncLogger name="org.crsh.plugin" level="warn" />
+		<AsyncLogger name="org.crsh.ssh" level="warn"/>
+		<AsyncLogger name="org.hibernate.validator.internal.util.Version" level="warn" />
+		<AsyncLogger name="org.springframework.boot.actuate.autoconfigure.CrshAutoConfiguration" level="warn"/>
+		<AsyncLogger name="org.springframework.boot.actuate.endpoint.jmx" level="warn"/>
+		<AsyncRoot level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="DebugRollingFile" />
+		</AsyncRoot>
+	</Loggers>
+</Configuration>
