@@ -26,4 +26,11 @@ public class PublishResponse {
 		this.isPublished = isPublished;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PublishResponse [isPublished=").append(isPublished).append("]");
+		return builder.toString();
+	}
+
 }

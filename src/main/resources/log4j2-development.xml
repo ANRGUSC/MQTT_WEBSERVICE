@@ -10,8 +10,8 @@
 		<Console name="Console" target="SYSTEM_OUT" follow="true">
 			<PatternLayout pattern="${LOG_PATTERN}" />
 		</Console>
-		<RollingFile name="DebugRollingFile" fileName="urlshortener_base/logs/urlshortener.log"
-			filePattern="urlshortener_base/logs/urlshortener.log.%d{yyyy-MM-dd-HH}.gz">
+		<RollingFile name="DebugRollingFile" fileName="mqtt_logs/logs/mqtt.log"
+			filePattern="mqtt_logs/logs/mqtt.log.%d{yyyy-MM-dd-HH}.gz">
 			<PatternLayout pattern="${LOG_PATTERN}" />
 			<Policies>
 				<TimeBasedTriggeringPolicy />

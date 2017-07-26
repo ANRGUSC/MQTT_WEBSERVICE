@@ -29,3 +29,6 @@ mvnw
 mvnw.cmd
 paho1500863576703000000-tcpneptuneuscedu1883/
 
+.metadata/
+mqtt_logs/
+

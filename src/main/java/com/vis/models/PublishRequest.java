@@ -33,4 +33,11 @@ public class PublishRequest {
 		this.message = message;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PublishRequest [topic=").append(topic).append(", message=").append(message).append("]");
+		return builder.toString();
+	}
+
 }
