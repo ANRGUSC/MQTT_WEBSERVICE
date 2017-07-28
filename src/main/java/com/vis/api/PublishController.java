@@ -35,9 +35,8 @@ public class PublishController {
 
 	@RequestMapping(method = { RequestMethod.GET, RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public PublishResponse publish(@Valid PublishRequest publishRequest) {
-		LOGGER.info("Request to publish data-" + publishRequest);
 		PublishResponse publishResponse = publishService.publishData(publishRequest);
-
+		LOGGER.info("Request to publish data-" + publishRequest + " Response-" + publishResponse);
 		return publishResponse;
 	}
 }

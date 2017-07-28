@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2017, Autonomous Networks Research Group. All rights reserved.
+  contributor: Vishal D. Rahane
+  Read license file in main directory for more details
+-->
 <Configuration status="WARN">
 	<Properties>
 		<Property name="PID">????</Property>
@@ -38,3 +43,4 @@
 		</AsyncRoot>
 	</Loggers>
 </Configuration>
+
