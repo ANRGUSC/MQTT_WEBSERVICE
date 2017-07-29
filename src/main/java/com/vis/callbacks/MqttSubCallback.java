@@ -19,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.vis.models.RedisCacheUrlModel;
+
 /**
  * @author vis
  *
@@ -46,15 +48,20 @@ public class MqttSubCallback implements MqttCallback {
 
 	@Override
 	public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-		// get url from redis for this topic and hit the url;
+		// get urls from redis for this topic and hit the url;
 		try {
-			String url = (String) redisTemplate.opsForValue().get(topic);
-			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).queryParam("message", mqttMessage)
-					.build();
-			restTemplate.getForObject(uriComponents.toString(), String.class);
+			RedisCacheUrlModel redisCacheUrlModel = (RedisCacheUrlModel) redisTemplate.opsForValue().get(topic);
+			for (String url : redisCacheUrlModel.getUrlSet()) {
+				makeHttpCall(url, mqttMessage);
+			}
 		} catch (Exception ex) {
 			LOGGER.error("Exception while sending data to the client-", ex);
 		}
+	}
+
+	private void makeHttpCall(String url, MqttMessage mqttMessage) throws Exception {
+		UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).queryParam("message", mqttMessage).build();
+		restTemplate.getForObject(uriComponents.toString(), String.class);
 	}
 
 }
