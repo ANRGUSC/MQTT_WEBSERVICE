@@ -8,6 +8,8 @@
  */
 package com.vis.callbacks;
 
+import java.util.Iterator;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -18,8 +20,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import com.vis.models.RedisCacheUrlModel;
 
 /**
  * @author vis
@@ -50,9 +50,13 @@ public class MqttSubCallback implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
 		// get urls from redis for this topic and hit the url;
 		try {
-			RedisCacheUrlModel redisCacheUrlModel = (RedisCacheUrlModel) redisTemplate.opsForValue().get(topic);
+		/*	RedisCacheUrlModel redisCacheUrlModel = (RedisCacheUrlModel) redisTemplate.opsForValue().get(topic);
 			for (String url : redisCacheUrlModel.getUrlSet()) {
 				makeHttpCall(url, mqttMessage);
+			}*/
+			Iterator<Object> urlsIterator = redisTemplate.opsForSet().members(topic).iterator();
+			while (urlsIterator.hasNext()) {
+				makeHttpCall((String) urlsIterator.next(), mqttMessage);
 			}
 		} catch (Exception ex) {
 			LOGGER.error("Exception while sending data to the client-", ex);
