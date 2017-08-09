@@ -3,19 +3,17 @@
  * contributor: Vishal D. Rahane
  * Read license file in main directory for more details
  ******************************************************************************/
-/**
- * 
- */
 package com.vis.service;
 
-import com.vis.models.SubscribeRequest;
-import com.vis.models.SubscribeResponse;
+import com.vis.models.UnsubscribeRequest;
+import com.vis.models.UnsubscribeResponse;
 
 /**
  * @author vis
  *
  */
-public interface SubscribeService {
+public interface UnsubscribeService {
 
-	SubscribeResponse subscribeToTopic(SubscribeRequest subscriptionRequest);
+	UnsubscribeResponse unsubscribe(UnsubscribeRequest unsubscribeRequest);
+
 }
