@@ -7,10 +7,10 @@ package com.vis.models;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class SubscriptionResponse {
+public class SubscribeResponse {
 	private boolean isSubscribed;
 
-	public SubscriptionResponse() {
+	public SubscribeResponse() {
 		isSubscribed = true;
 	}
 

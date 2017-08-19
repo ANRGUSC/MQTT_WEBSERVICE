@@ -6,7 +6,7 @@
 package com.vis.models;
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class SubscriptionRequest {
+public class SubscribeRequest {
 
 	@NotEmpty
 	private String callbackUrl;

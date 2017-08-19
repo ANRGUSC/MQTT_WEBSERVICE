@@ -8,6 +8,8 @@
  */
 package com.vis.callbacks;
 
+import java.util.Iterator;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -46,15 +48,20 @@ public class MqttSubCallback implements MqttCallback {
 
 	@Override
 	public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-		// get url from redis for this topic and hit the url;
+		// get urls from redis for this topic and hit the url;
 		try {
-			String url = (String) redisTemplate.opsForValue().get(topic);
-			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).queryParam("message", mqttMessage)
-					.build();
-			restTemplate.getForObject(uriComponents.toString(), String.class);
+			Iterator<Object> urlsIterator = redisTemplate.opsForSet().members(topic).iterator();
+			while (urlsIterator.hasNext()) {
+				makeHttpCall((String) urlsIterator.next(), mqttMessage);
+			}
 		} catch (Exception ex) {
 			LOGGER.error("Exception while sending data to the client-", ex);
 		}
+	}
+
+	private void makeHttpCall(String url, MqttMessage mqttMessage) throws Exception {
+		UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).queryParam("message", mqttMessage).build();
+		restTemplate.getForObject(uriComponents.toString(), String.class);
 	}
 
 }
