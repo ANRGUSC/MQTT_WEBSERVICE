@@ -50,10 +50,6 @@ public class MqttSubCallback implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
 		// get urls from redis for this topic and hit the url;
 		try {
-		/*	RedisCacheUrlModel redisCacheUrlModel = (RedisCacheUrlModel) redisTemplate.opsForValue().get(topic);
-			for (String url : redisCacheUrlModel.getUrlSet()) {
-				makeHttpCall(url, mqttMessage);
-			}*/
 			Iterator<Object> urlsIterator = redisTemplate.opsForSet().members(topic).iterator();
 			while (urlsIterator.hasNext()) {
 				makeHttpCall((String) urlsIterator.next(), mqttMessage);
