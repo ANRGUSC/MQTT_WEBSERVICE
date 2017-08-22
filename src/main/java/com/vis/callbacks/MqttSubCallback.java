@@ -61,7 +61,8 @@ public class MqttSubCallback implements MqttCallback {
 
 	private void makeHttpCall(String url, MqttMessage mqttMessage) throws Exception {
 		UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).queryParam("message", mqttMessage).build();
-		restTemplate.getForObject(uriComponents.toString(), String.class);
+		String response = restTemplate.getForObject(uriComponents.toString(), String.class);
+		LOGGER.info("Response from api on sending message-{}", response);
 	}
 
 }
