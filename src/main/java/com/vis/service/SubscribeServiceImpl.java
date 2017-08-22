@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.vis.models.SubscriptionRequest;
-import com.vis.models.SubscriptionResponse;
+import com.vis.models.SubscribeRequest;
+import com.vis.models.SubscribeResponse;
 
 /**
  * @author vis
@@ -37,8 +37,8 @@ public class SubscribeServiceImpl implements SubscribeService {
 	private MqttClient mqttClient;
 
 	@Override
-	public SubscriptionResponse subscribeToTopic(SubscriptionRequest subscriptionRequest) {
-		SubscriptionResponse subscriptionResponse = new SubscriptionResponse();
+	public SubscribeResponse subscribeToTopic(SubscribeRequest subscriptionRequest) {
+		SubscribeResponse subscriptionResponse = new SubscribeResponse();
 		boolean isRegistered = registerUrl(subscriptionRequest);
 		if (isRegistered) {
 			subscriptionResponse = subscribe(subscriptionRequest);
@@ -49,23 +49,24 @@ public class SubscribeServiceImpl implements SubscribeService {
 
 	}
 
-	private SubscriptionResponse subscribe(SubscriptionRequest subscriptionRequest) {
-		SubscriptionResponse subscriptionResponse = new SubscriptionResponse();
+	private SubscribeResponse subscribe(SubscribeRequest subscriptionRequest) {
+		SubscribeResponse subscriptionResponse = new SubscribeResponse();
 		try {
 			mqttClient.subscribe(subscriptionRequest.getTopic());
 		} catch (MqttException e) {
 			subscriptionResponse.setSubscribed(false);
-			LOGGER.error("Exception while publishing data-", e);
+			LOGGER.error("Exception while subscribing data-", e);
 		}
 		return subscriptionResponse;
 
 	}
 
-	private boolean registerUrl(SubscriptionRequest subscriptionRequest) {
-		// put topic:url mapping in the cache
+	private boolean registerUrl(SubscribeRequest subscriptionRequest) {
 		boolean result = true;
 		try {
-			redisTemplate.opsForValue().set(subscriptionRequest.getTopic(), subscriptionRequest.getCallbackUrl());
+			// append topic:url mapping to the existing set
+			redisTemplate.opsForSet().add(subscriptionRequest.getTopic(), subscriptionRequest.getCallbackUrl());
+			
 		} catch (Exception ex) {
 			LOGGER.error("Exception while persisting callback info to redis-" + ex);
 			result = false;

@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vis.models.SubscriptionRequest;
-import com.vis.models.SubscriptionResponse;
+import com.vis.models.SubscribeRequest;
+import com.vis.models.SubscribeResponse;
 import com.vis.service.SubscribeService;
 
 /**
@@ -36,8 +36,8 @@ public class SubscribeController {
 	private SubscribeService subscribeService;
 
 	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
-	public SubscriptionResponse subscribe(@Valid SubscriptionRequest subscriptionRequest) {
-		SubscriptionResponse subscriptionResponse = subscribeService.subscribeToTopic(subscriptionRequest);
+	public SubscribeResponse subscribe(@Valid SubscribeRequest subscriptionRequest) {
+		SubscribeResponse subscriptionResponse = subscribeService.subscribeToTopic(subscriptionRequest);
 		LOGGER.info("Request to subscribe data-" + subscriptionRequest + " Response-" + subscriptionResponse);
 		return subscriptionResponse;
 	}  
