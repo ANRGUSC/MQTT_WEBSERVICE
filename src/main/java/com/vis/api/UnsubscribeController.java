@@ -32,7 +32,7 @@ public class UnsubscribeController {
 	@RequestMapping(method = { RequestMethod.GET, RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public UnsubscribeResponse unsubscribe(UnsubscribeRequest unsubscribeRequest) {
 		UnsubscribeResponse unsubscribeResponse = unsubscribeService.unsubscribe(unsubscribeRequest);
-		LOGGER.info("Request to unsubscribe data-" + unsubscribeRequest + " Response-" + unsubscribeResponse);
+		LOGGER.info("Request to unsubscribe data- {} Response- {}", unsubscribeRequest, unsubscribeResponse);
 		return unsubscribeResponse;
 	}
 

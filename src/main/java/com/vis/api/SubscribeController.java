@@ -38,7 +38,7 @@ public class SubscribeController {
 	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public SubscribeResponse subscribe(@Valid SubscribeRequest subscriptionRequest) {
 		SubscribeResponse subscriptionResponse = subscribeService.subscribeToTopic(subscriptionRequest);
-		LOGGER.info("Request to subscribe data-" + subscriptionRequest + " Response-" + subscriptionResponse);
+		LOGGER.info("Request to subscribe data- {} Response- {}", subscriptionRequest, subscriptionResponse);
 		return subscriptionResponse;
 	}  
 }
