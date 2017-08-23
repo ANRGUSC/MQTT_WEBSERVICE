@@ -1,16 +1,16 @@
 # A wrapper web-service to publish/subscribe data to MQTT.
 
----------------
 
-Q) Why should I use this web-service?
-
+### Q) Why should I use this web-service?
 
 Want to get rid of all the mqtt connections and callbacks handling from your application? If yes, simply use the exposed apis to publish or subscribe/unsubscribe to your topic and you are done!
 The web-service will establish a connection with the mqtt broker on your behalf and publish/subscribe to your topic for you.
 Thus, your application does what it is supposed to do and all the mqtt part is extracted. For eg, your application running on raspberry pi can publish data to the topic via web-service without itself estalishing connections. 
----------------
-Q) How to use this service?
-<br>It is a Spring Boot application and the final executable is .jar file. 
+
+
+### Q) How to use this service?
+
+It is a Spring Boot application and the final executable is .jar file. 
 
 Requirements:
 Java - 1.8
@@ -36,7 +36,8 @@ IDE- preferred Eclipse with Spring boot plugin and maven build support or STS.
 2) Import in your ide.
 3) Run MqttWebServiceApplication.java as java application. Wait for successfull completion.
 ---------------
-Q) Apis?
+
+### Q) How does the API work?
 1) If your application wants to publish data, make a GET/POST call
 <br>Sample GET:
 https://localhost:8443/mqtt/publish?message=hey%20Vis&topic=/rth/beacons/
@@ -63,5 +64,6 @@ https://localhost:8443/mqtt/unsubscribe?topic=/rth/beacons/
 
 License-https://github.com/ANRGUSC/MQTT_WEBSERVICE/blob/master/License.md
 ---------------
-Drop me an email at rahane@usc.edu if you need any other info.
+
+Drop an email to rahane@usc.edu if you need any other info.
 
